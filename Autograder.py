@@ -1,6 +1,3 @@
-__author__ = "joshua diaddigo"
-__email__ = "joshua.diaddigo@gatech.edu"
-
 import os
 import re
 import imp
@@ -8,6 +5,7 @@ from unittest.mock import *
 from datetime import *
 import traceback
 import sys
+
 
 def run_tests(test_cases, expected_hw_filename, due_date=None, output=sys.stdout, path=os.getcwd()):
     if due_date is None:
@@ -17,6 +15,7 @@ def run_tests(test_cases, expected_hw_filename, due_date=None, output=sys.stdout
     __automate_tests(test_cases, expected_hw_filename, due_date, path)
     sys.stdout = temp
     return output
+
 
 def __automate_tests(test_cases, expected_hw_filename, due_date, base_path):
     def print_indent(*args):
@@ -75,9 +74,9 @@ def __automate_tests(test_cases, expected_hw_filename, due_date, base_path):
 
                 print("\nTest Results: \n")
 
-                hw = imp.new_module("HW")
+                hw = imp.new_module("hw")
                 exec(executable_code, hw.__dict__)
-                sys.modules["HW"] = hw
+                sys.modules["hw"] = hw
 
                 with patch('builtins.print', side_effect=print_indent):
                     test_cases(hw)
@@ -86,4 +85,3 @@ def __automate_tests(test_cases, expected_hw_filename, due_date, base_path):
 
             print("\n" + ("-" * 100) + "\n")
             sys.path.remove(new_dir)
-

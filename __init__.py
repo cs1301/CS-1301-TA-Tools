@@ -1,3 +1,3 @@
-from .Autograder import *
-from .Compare import *
-from .Helpers import *
+from .autograder import *
+from .compare import *
+from .helpers import *
