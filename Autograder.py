@@ -27,7 +27,7 @@ def __automate_tests(test_cases, expected_hw_filename, due_date, base_path):
     def print_formatted(*args, indent_level=3):
         tabs = "\t" * indent_level
         content = (tabs + "{}").format(" ".join(map(str, args)))
-        sys.stdout.write(("<br>\n" + tabs).join(content.split("\n")) + "\n")
+        sys.stdout.write(("<br>\n" + tabs).join(content.split("\n")) + "<br>\n")
 
     print("<!DOCTYPE html>")
     for directory in os.listdir(base_path):
