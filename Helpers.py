@@ -2,6 +2,7 @@ __author__ = 'Joshua Diaddigo'
 
 import signal
 from unittest.mock import *
+import sys
 
 def fake_input(function, input_items):
     with patch('builtins.input', side_effect=input_items):
@@ -9,7 +10,7 @@ def fake_input(function, input_items):
 
 def timeout(function, seconds):
         result = None
-        signal.signal(signal.SIGALRM, lambda: print("Infinite loop?") if result is Exception else None)
+        signal.signal(signal.SIGALRM, lambda: sys.stdout.write("Infinite loop?\n") if result is Exception else None)
         signal.alarm(seconds)
         try:
             result = function()
