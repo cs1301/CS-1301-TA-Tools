@@ -1,8 +1,6 @@
 __author__ = 'joshua'
 
-from Module import Autograder
-from Module import Helpers
-
+import Autograder
 
 print("Running test cases...")
 
