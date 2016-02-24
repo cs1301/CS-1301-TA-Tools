@@ -1,2 +1,2 @@
-import Autograder
-import Helpers
+import Module.Autograder
+import Module.Helpers
