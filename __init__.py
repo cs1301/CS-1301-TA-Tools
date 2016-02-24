@@ -1,3 +1,3 @@
-from .autograder_ import *
-from .compare_ import *
-from .helpers_ import *
+from .autograder import *
+from .compare import *
+from .helpers import *
