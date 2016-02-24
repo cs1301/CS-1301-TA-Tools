@@ -8,26 +8,22 @@ from unittest.mock import *
 from datetime import *
 import traceback
 import sys
-import io
 
-def run_testcases(test_cases, expected_hw_filename, due_date="99/99/9999", output=None, path=os.getcwd()):
+def run_tests(test_cases, expected_hw_filename, due_date=None, output=sys.stdout, path=os.getcwd()):
+    if due_date is None:
+        due_date = datetime(2099, 12, 31, 23, 59, 59)
     temp = sys.stdout
-    if output is None:
-        output = io.StringIO()
     sys.stdout = output
     __automate_tests(test_cases, expected_hw_filename, due_date, path)
     sys.stdout = temp
-    output.close()
     return output
 
 def __automate_tests(test_cases, expected_hw_filename, due_date, base_path):
-    due_date = datetime(int("20" + due_date[2]), int(due_date[0]), int(due_date[1]), 23, 59, 59)
-
     def print_indent(*args):
         sys.stdout.write("\t{}\n".format(" ".join(map(str, args))))
 
     print(("-" * 100) + "\n")
-    for directory in os.listdir(os.getcwd()):
+    for directory in os.listdir(base_path):
         if directory[0] != "." and directory[0] != "a" and directory != "results.txt":
             print("Student:\n\t {} \n".format(re.sub(r'\([^)]*\)', '', directory)))
             new_dir = os.path.join(base_path, directory)

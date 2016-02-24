@@ -24,7 +24,7 @@ def timeout(function, seconds):
         try:
             result = function()
         except __TA_Tools_Error:
-            print("Infinite loop?")
+            print("Function timeout: Infinite loop?")
         finally:
             signal.alarm(0)
         return result
