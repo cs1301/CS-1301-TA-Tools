@@ -1,5 +1,3 @@
-__author__ = 'Joshua Diaddigo'
-
 from difflib import SequenceMatcher
 import os
 import sys
