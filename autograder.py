@@ -18,10 +18,16 @@ def run_tests(test_cases, expected_hw_filename, due_date=None, output=sys.stdout
 
 
 def __automate_tests(test_cases, expected_hw_filename, due_date, base_path):
-    def print_html(content="", tag_name="div", id=None, class_name=None, indent_level=0, closing=True):
+    def print_html(content="", tag_name="div", id=None, class_name=None, indent_level=0, closing=True, attributes=None):
         id_section = "" if id is None else " id='" + id.lower() + "'"
         class_section = "" if class_name is None else " class='" + class_name.lower() + "'"
-        out_str = "<" + tag_name + id_section + class_section + ">" + content
+
+        attributes_section = ""
+        if attributes is not None:
+            for attribute in attributes.keys():
+                attributes_section += attribute + "='" + attributes[attribute] + "'"
+
+        out_str = "<" + tag_name + id_section + class_section + attributes_section + ">" + content
         out_str += ("</" + tag_name + ">") if closing else ""
         sys.stdout.write(("\t" * indent_level) + out_str + "\n")
 
