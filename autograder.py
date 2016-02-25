@@ -18,9 +18,10 @@ def run_tests(test_cases, expected_hw_filename, due_date=None, output=sys.stdout
 
 
 def __automate_tests(test_cases, expected_hw_filename, due_date, base_path):
-    def print_html(content="", tag_name="div", id=None, class_name="", indent_level=0, closing=True):
-        id_section = "" if id is None else " id='" + id + "'"
-        out_str = "<" + tag_name + id_section + " class='" + class_name + "'>" + content
+    def print_html(content="", tag_name="div", id=None, class_name=None, indent_level=0, closing=True):
+        id_section = "" if id is None else " id='" + id.lower() + "'"
+        class_section = "" if class_name is None else " class='" + class_name.lower() + "'"
+        out_str = "<" + tag_name + id_section + class_section + ">" + content
         out_str += ("</" + tag_name + ">") if closing else ""
         sys.stdout.write(("\t" * indent_level) + out_str + "\n")
 
@@ -100,4 +101,55 @@ def __automate_tests(test_cases, expected_hw_filename, due_date, base_path):
             sys.path.remove(new_dir)
 
             print("\t</div>")
+    print_html(tag_name="style", content=__style)
     print("</html>")
+
+__style = """
+
+body {
+    background: #333;
+    color: #fff;
+    font-family: sans-serif;
+    margin: 0;
+}
+
+.student_name {
+    padding: 10px;
+    box-sizing: border-box;
+    width: 100%;
+    background: #444;
+    border-top: 1px solid #aaa;
+}
+
+.student_submission_time {
+    text-align: right;
+    font-size: 12px;
+    background: #444;
+    padding: 5px;
+    border-top: 1px solid #393939;
+    border-bottom: 1px solid #393939;
+}
+
+.student_comments {
+    padding: 20px;
+    font-family: monospace;
+}
+
+.student_comments:before {
+    content: "Comments:";
+    display: block;
+    color: #888;
+}
+
+.student_test_results {
+    padding: 20px;
+    font-family: monospace;
+}
+
+.student_test_results:before {
+    content: "Results:";
+    display: block;
+    color: #888;
+}
+
+"""
