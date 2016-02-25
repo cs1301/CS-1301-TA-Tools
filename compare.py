@@ -33,7 +33,7 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programmi
 
             name_2 = file_2[0][file_2[0].find(path + "/") + len(path + "/"):file_2[0].find("(")]
 
-            if pair_programming and (name_2.split(", ")[0] in file_1[1] or name_2.split(", ")[1] in file_1[1]):
+            if pair_programming and name_2.split(", ")[0] in file_1[1] and name_2.split(", ")[1] in file_1[1]:
                 continue
 
             if file_1 == file_2:
