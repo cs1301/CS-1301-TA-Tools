@@ -50,7 +50,7 @@ def __automate_tests(test_cases, expected_hw_filename, due_date, base_path):
                            content="THIS ASSIGNMENT IS LATE." if submitted_date > due_date else "Submitted on time",
                            indent_level=2)
             except Exception:
-                print_html(class_name='submission_time', content="NO SUBMISSION", indent_level=2)
+                print_html(class_name='student_submission_time', content="NO SUBMISSION", indent_level=2)
                 print("\t</div>")
                 continue
 
