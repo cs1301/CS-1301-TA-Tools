@@ -25,7 +25,7 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programmi
                     homework_submissions.append((curr_path, contents))
 
     number_of_submissions = len(homework_submissions)
-    print("Evaluating {} python file{}.\n".format(number_of_submissions, "s" if number_of_submissions > 1 else ""))
+    print("Evaluating {} file{}.\n".format(number_of_submissions, "s" if number_of_submissions != 1 else ""))
 
     comparisons_completed = 0
     discovered_pairs = []
