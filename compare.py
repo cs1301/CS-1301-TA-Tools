@@ -3,22 +3,26 @@ import os
 import sys
 
 
-def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programming=False):
+def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programming=False, file_types=None):
     if blacklist is None:
         blacklist = []
+
+    if file_types is None:
+        file_types = [".py"]
 
     homework_submissions = []
 
     for root, directories, files in os.walk(path):
         for file_location in files:
-            if file_location.endswith(".py") and file_location.lower() not in blacklist:
-                curr_path = os.path.join(root, file_location)
+            for file_type in file_types:
+                if file_location.endswith(file_type) and file_location.lower() not in blacklist:
+                    curr_path = os.path.join(root, file_location)
 
-                hw_file = open(curr_path)
-                contents = hw_file.read()
-                hw_file.close()
+                    hw_file = open(curr_path)
+                    contents = hw_file.read()
+                    hw_file.close()
 
-                homework_submissions.append((curr_path, contents))
+                    homework_submissions.append((curr_path, contents))
 
     number_of_submissions = len(homework_submissions)
     print("Evaluating {} python file{}.\n".format(number_of_submissions, "s" if number_of_submissions > 1 else ""))
@@ -40,6 +44,7 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programmi
                 continue
 
             sys.stdout.write("Progress: {:.2f}%\r".format((comparisons_completed / number_of_submissions ** 2) * 100))
+            sys.stdout.flush()
 
             sequence_matcher.set_seq2(file_2[1])
 
