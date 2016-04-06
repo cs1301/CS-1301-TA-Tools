@@ -76,4 +76,4 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programmi
             total_similarity += ratio
 
     print("Progress: 100.00%")
-    print("Average Similarity: < {:.2f}%".format((total_similarity / total_ratios) * 100) if total_ratios > 0 else 0)
+    print("Average Similarity: < {:.2f}%".format(((total_similarity / total_ratios) * 100)  if total_ratios > 0 else 0))
