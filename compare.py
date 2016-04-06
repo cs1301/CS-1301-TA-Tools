@@ -8,27 +8,36 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programmi
         blacklist = []
 
     if file_types is None:
-        file_types = [".py"]
+        file_types = [".py", ".java", ".js"]
 
     homework_submissions = []
 
     for root, directories, files in os.walk(path):
-        for file_location in files:
+        for filename in files:
             for file_type in file_types:
-                if file_location.endswith(file_type) and file_location.lower() not in blacklist:
-                    curr_path = os.path.join(root, file_location)
+                blacklisted = False
+                for item in blacklist:
+                    if filename.lower().startswith(item.lower()):
+                        blacklisted = True
+
+                if filename.endswith(file_type) and not blacklisted:
+                    curr_path = os.path.join(root, filename)
 
                     hw_file = open(curr_path)
                     contents = hw_file.read()
                     hw_file.close()
 
                     homework_submissions.append((curr_path, contents))
+                    break
 
     number_of_submissions = len(homework_submissions)
     print("Evaluating {} file{}.\n".format(number_of_submissions, "s" if number_of_submissions != 1 else ""))
 
     comparisons_completed = 0
+    total_similarity = 0.0
+    total_ratios = 0
     discovered_pairs = []
+
     for file_1 in homework_submissions:
         sequence_matcher = SequenceMatcher(None, file_1[1])
 
@@ -47,13 +56,16 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programmi
             sys.stdout.flush()
 
             sequence_matcher.set_seq2(file_2[1])
+            total_ratios += 1
 
             ratio = sequence_matcher.real_quick_ratio()
             if ratio < threshold:
+                total_similarity += ratio
                 continue
 
             ratio = sequence_matcher.quick_ratio()
             if ratio < threshold:
+                total_similarity += ratio
                 continue
 
             ratio = sequence_matcher.ratio()
@@ -61,4 +73,7 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programmi
                 discovered_pairs.append((file_1, file_2))
                 print("File 1: {}\nFile 2: {}\nSimilarity: {:.2f}%\n\n".format(file_1[0], file_2[0], ratio * 100))
 
+            total_similarity += ratio
+
     print("Progress: 100.00%")
+    print("Average Similarity: <{}%".format((total_similarity / total_ratios) * 100))
