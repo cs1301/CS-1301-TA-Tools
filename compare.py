@@ -4,7 +4,7 @@ import sys
 
 
 def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(),
-                 pair_programming=False, file_types=None, min_file_length=-1):
+                 pair_programming=False, file_types=None, min_file_length=-1, only_compare_like_names=False):
     if blacklist is None:
         blacklist = []
 
@@ -39,14 +39,23 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(),
     total_similarity = 0.0
     total_ratios = 0
     discovered_pairs = []
+    filename_1 = ""
 
     for file_1 in homework_submissions:
         sequence_matcher = SequenceMatcher(None, file_1[1])
+
+        if only_compare_like_names:
+            filename_1 = file_1[0].split("/")[-1]
 
         for file_2 in homework_submissions:
             comparisons_completed += 1
 
             name_2 = file_2[0][file_2[0].find(path + "/") + len(path + "/"):file_2[0].find("(")]
+
+            if only_compare_like_names:
+                filename_2 = file_2[0].split("/")[-1]
+                if filename_1 != filename_2:
+                    continue
 
             if pair_programming and name_2.split(", ")[0] in file_1[1] and name_2.split(", ")[1] in file_1[1]:
                 continue
@@ -78,4 +87,4 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(),
             total_similarity += ratio
 
     print("Progress: 100.00%")
-    print("Average Similarity: < {:.2f}%".format(((total_similarity / total_ratios) * 100)  if total_ratios > 0 else 0))
+    print("Average Similarity: < {:.2f}%".format(((total_similarity / total_ratios) * 100) if total_ratios > 0 else 0))
