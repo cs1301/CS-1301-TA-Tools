@@ -18,7 +18,7 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(),
             for file_type in file_types:
                 blacklisted = False
                 for item in blacklist:
-                    if filename.lower().startswith(item.lower()):
+                    if filename.lower() == item.lower():
                         blacklisted = True
 
                 if filename.endswith(file_type) and not blacklisted:
