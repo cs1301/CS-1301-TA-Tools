@@ -3,7 +3,8 @@ import os
 import sys
 
 
-def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programming=False, file_types=None):
+def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(),
+                 pair_programming=False, file_types=None, min_file_length=-1):
     if blacklist is None:
         blacklist = []
 
@@ -27,7 +28,8 @@ def find_similar(blacklist=None, threshold=0.6, path=os.getcwd(), pair_programmi
                     contents = hw_file.read()
                     hw_file.close()
 
-                    homework_submissions.append((curr_path, contents))
+                    if min_file_length == -1 or len(contents) >= min_file_length:
+                        homework_submissions.append((curr_path, contents))
                     break
 
     number_of_submissions = len(homework_submissions)
